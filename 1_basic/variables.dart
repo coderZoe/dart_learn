@@ -1,4 +1,4 @@
-import '../start/main.dart';
+import '../0_start/main.dart';
 
 void main() {
   var person1 = Person("Tom", 12);
