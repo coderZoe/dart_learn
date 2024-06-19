@@ -1,0 +1,9 @@
+name: my_project
+description: A new Dart project.
+version: 1.0.0
+
+environment:
+  sdk: '^3.4.0'
+
+dependencies:
+  characters: ^1.2.0

@@ -1,3 +1,5 @@
+import 'package:characters/characters.dart';
+
 void main() {
   int a = -10;
   a = a.abs();
@@ -58,4 +60,12 @@ dependencies:
 //原始字符串 不转义 使用r开头 加一段字符串
   var str6 = r'In a raw string, not even \n gets special treatment.';
   print(str6);
+
+  //读取单个字符
+  var str7 = 'hello world';
+  print(str7);
+  print(str7.substring(str7.length - 1));
+  //将字符串转为字符集合并获取最后一个元素 与上面写法相同
+  //需要注意的是这种写法需要引入三方依赖
+  print(str7.characters.last);
 }
