@@ -61,6 +61,14 @@ void main() {
   //dart对于对象的解构只能用在构造方法上
   var person = Person(name: '小明', age: 12);
   print('${person.name},${person.age}');
+
+  //对象结构 支持结构属性和getter
+  //对象的结构与record的不同是，对象结构需要类型()，必须得加类型，record不需要
+  var xiaoli = Person(name: '小李', age: 12);
+  var Person(:name, :age) = xiaoli;
+  print('name:$name,age:$age');
+  var Person(:ageAdd) = xiaoli;
+  print('ageAdd:$ageAdd');
 }
 
 class Person {
@@ -68,4 +76,6 @@ class Person {
   int age;
 
   Person({required this.name, required this.age});
+
+  int get ageAdd => this.age + 1;
 }
