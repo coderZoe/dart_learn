@@ -1,6 +1,4 @@
-import '../3_patterns/switch.dart';
-
-void main() {
+void main() async {
   print(sum(a: 1));
   print(sum(a: 1, b: 2));
   print(sum2());
@@ -40,6 +38,10 @@ void main() {
     print(item);
   }
   for (var item in syncGenerator2()) {
+    print(item);
+  }
+
+  await for (var item in asyncGenerator(5)) {
     print(item);
   }
 }
@@ -98,4 +100,12 @@ Iterable<int> syncGenerator2() sync* {
   yield 1;
   yield 2;
   yield 3;
+}
+
+///除以以外 dart还支持异步生成器 异步生成器的返回是Stream<T>
+Stream<int> asyncGenerator(int max) async* {
+  for (int i = 0; i < max; i++) {
+    await Future.delayed(Duration(seconds: 2));
+    yield i;
+  }
 }
