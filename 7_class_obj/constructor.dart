@@ -62,3 +62,86 @@ class Person6 {
     return _cache.putIfAbsent(name, () => Person6(name, age));
   }
 }
+
+///在dart中构造方法有如下几处不能使用this:
+///1. 工厂构造方法内不能使用this 工厂构造函数也不能用初始化列表，
+///我们将工厂构造函数理解一个工厂class内的一个单独的创建当前对象的普通的函数就好
+///想象我们现在有一个Person class，那么这个PersonClass的factory我们理解有一个单独的PersonFactory class
+///里面有一个create方法即可，想一下你可以在PersonFactory的create里使用this指向Person吗？显然不可以。
+
+///官网对于使用工厂函数的场景是：
+/// a. 构造函数并不总是创建其类的新实例。
+/// b. 在构造实例之前，您需要执行一些重要的工作。这可能包括检查参数或执行初始化器列表中无法处理的任何其他处理
+
+///2. 初始化列表的右侧(初始化列表表达式是 : this.x = x这种，初始化列表右侧不能用this是指
+///不能出现 :this.x = this.y+1 这种)
+///3. 父类构造函数的参数 解释下这里：
+// class Person {
+//   String name;
+//   Person(this.name);
+// }
+// class Tom extends Person {
+//   int age;
+//   Tom(this.age, super.name);
+// }
+
+///如上，Tom的构造函数Tom(this.age, super.name)，这里只能用super.name不能用this.name;
+
+class Person7 {
+  String name;
+  int age;
+  Person7.init({required String name, required int age})
+      : this.name = name,
+        this.age = age {
+    this.age = 12;
+    print('hello person7');
+  }
+}
+
+///dart中的初始化列表设计的挺割裂的，它的主要作用是实例赋值，我觉得这一主要原因是dart的空安全检查问题，比如：
+// class Person {
+//   String name;
+//   int age;
+
+//   Person(String name, int age) {
+//     this.name = name;
+//     this.age = age;
+//   }
+// }
+/// 如上代码会编译不过，除非你将name和age设为late或者设为可空?。我觉得这是dart空安全检查偷懒导致的，dart似乎只检查了入参和初始化列表
+/// 并不检查构造方法体 因此上述构造方法必须写成
+// class Person {
+//   String name;
+//   int age;
+
+//   Person(this.name, this.age);
+// }
+/// 如上那样
+/// 但很明显，上面那种写法有些死板，不够灵活，因此就有了初始化列表
+// class Person {
+//   String name;
+//   int age;
+
+//   Person(String name, int age)
+//       : this.name = name + 'Person',
+//         this.age = age + 1;
+// }
+
+///在初始化列表中我们可以单独使用表达式来赋值属性
+
+///我们也可以这样理解：dart的空安全检查不会检查构造函数体，
+///而是使用了一个叫初始化列表的东西让你单独来对属性赋值，这样它只需要检查初始化列表的内容就可以了
+///但初始化列表写起来有时繁琐，因此又加进了语法糖：Person(this.name, this.age)
+///换言之，dart的实例初始化不是在构造方法内初始化的，而是通过初始化列表初始化的
+
+///在dart中 构造函数不会被继承，其他语言其实也是，如Java
+class Person8 {
+  String name;
+  int age;
+  Person8(this.name, this.age);
+}
+
+//必须也得构造方法来初始化name和age，因为不会继承父类的构造方法
+class Tom extends Person8 {
+  Tom(String name, int age) : super(name, age);
+}
