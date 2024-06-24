@@ -6,6 +6,8 @@ void main() {
   var person5 = Person5.init('Tom');
   var person6_1 = Person6.fromJson({'name': 'Tom', 'age': 12});
   var person6_2 = Person6.cache('Tom', 12);
+
+  var map = <String, String>{};
 }
 
 ///dart下的构造函数还是挺复杂的
