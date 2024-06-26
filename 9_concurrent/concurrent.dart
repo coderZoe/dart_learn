@@ -91,19 +91,8 @@ void main() async {
 
   int fib(int n) => n <= 1 ? 1 : fib(n - 1) + fib(n - 2);
 
-  var start = DateTime.now();
-  print('stat $start');
-  var fibResult1 = fib(50);
-  var end = DateTime.now();
-  print('end $end');
-  print(
-      'cost:${end.millisecondsSinceEpoch - start.millisecondsSinceEpoch},resule:$fibResult1');
-  // var fibResult1 = await Isolate.run(() => );
-  // var fibResult2 = await Isolate.run(() => fib(50));
-  // var fibResult3 = await Isolate.run(() => fib(50));
-  // print('fibResult1 $fibResult1');
-  // print('fibResult2 $fibResult2');
-  // print('fibResult3 $fibResult3');
+  var fibResult = await Isolate.run(() => fib(50));
+  print('fibResult2 $fibResult');
 }
 
 Stream<int> StreamGenerator() async* {
