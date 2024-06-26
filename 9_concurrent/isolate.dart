@@ -15,6 +15,11 @@ import 'dart:isolate';
 ///4. 新建的isolate执行的时候，创建自己的ReceivePort
 ///5. 新建isolate将自己的ReceivePort内的SendPort传给主isolate 方便主isolate与新建的isolate通信
 void main() {
+  //Isolate.run 可以迅速启动一个isolate来执行一个方法 执行完成后这个isolate就关闭了
+  //但很多时候我们可能需要频繁的异步执行一些相同的代码，如果每次执行都开一个isolate，又频繁的开，会带来性能损耗
+  //一种合理的方案是：创建一个不销毁的isolate，然后通过receivePort和sendPort来和这个isolate通信
+  //这就像java下的线程思想，如果只是运行一些临时的方法，可以new Thread一个线程来执行，跑完这个Thread就销毁了
+  //但如果频繁需要异步运行这个方法，频繁的线程创建和销毁开销有些大，这时候就需要考虑使用线程池，创建一些不会销毁的线程，随时提交一些任务给这些线程
   Worker worker = MyJsonParseWorker();
   worker.spawn();
   worker.send('{name: tom}');
