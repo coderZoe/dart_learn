@@ -135,6 +135,8 @@ class Person7 {
 ///而是使用了一个叫初始化列表的东西让你单独来对属性赋值，这样它只需要检查初始化列表的内容就可以了
 ///但初始化列表写起来有时繁琐，因此又加进了语法糖：Person(this.name, this.age)
 ///换言之，dart的实例初始化不是在构造方法内初始化的，而是通过初始化列表初始化的
+///注：对于dart的空安全和和初始化列表可以参见文章：https://dart.dev/null-safety/understanding-null-safety#uninitialized-variables
+///对于dart来说，非空字段必须在声明时初始化，或在构造函数的初始化列表中初始化，换句话说，只要字段在进入构造函数主体之前有一个值，就可以了
 
 ///在dart中 构造函数不会被继承，其他语言其实也是，如Java
 class Person8 {
