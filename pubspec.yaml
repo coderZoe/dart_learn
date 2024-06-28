@@ -7,3 +7,4 @@ environment:
 
 dependencies:
   characters: ^1.2.0
+  http: ^1.2.1
