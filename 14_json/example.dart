@@ -4,7 +4,7 @@
 
 import 'package:json_annotation/json_annotation.dart';
 
-part 'example.g.dart';
+part '../lib/example.g.dart';
 
 @JsonSerializable()
 class Person {

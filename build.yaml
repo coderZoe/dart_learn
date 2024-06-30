@@ -1,0 +1,13 @@
+targets:
+  $default:
+    sources:
+      - lib/**
+      - test/**.dart
+      - web/**.dart
+      - 14_json/**.dart
+    builders:
+      json_serializable:
+        options:
+          explicit_to_json: true
+          create_factory: true
+          create_to_json: true
